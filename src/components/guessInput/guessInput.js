@@ -1,13 +1,14 @@
 import React from "react";
 
-function GuessInput() {
-  const [currentGuess, setCurrentGuess] = React.useState("");
+function GuessInput({handleSubmitGuess}) {
+  const [currentGuess, setCurrentGuess] = React.useState([]);
   return (
     <form
       className="guess-input-wrapper"
       onSubmit={(event) => {
         event.preventDefault();
         console.log(currentGuess);
+        handleSubmitGuess(currentGuess);
         event.target.reset();
       }}
     >
@@ -20,7 +21,8 @@ function GuessInput() {
         maxLength={5}
         required
         onChange={(event) => {
-          setCurrentGuess(event.target.value.toUpperCase());
+          const inputValue = event.target.value.toUpperCase();
+          setCurrentGuess(inputValue);
         }}
       />
     </form>
