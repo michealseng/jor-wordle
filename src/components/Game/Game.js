@@ -3,7 +3,9 @@ import React from "react";
 import { sample } from "../../utils";
 import { WORDS } from "../../data";
 import GuessInput from "../guessInput/guessInput";
-import GuessList from "../GuessList/GuessList";
+// import GuessList from "../GuessList/GuessList";
+import Guess from "../Guess/Guess";
+import { checkGuess } from "../../game-helpers";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -12,29 +14,47 @@ console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
+  const [gameStatus, setGameStatus] = React.useState("running");
 
   function handleSubmitGuess(newInput) {
     // add the new guess to the list of guesses
     // update the state
-    const newGuess = { value: newInput, id: crypto.randomUUID() };
+    const newGuess = {
+      value: newInput,
+      id: crypto.randomUUID(),
+      result: checkGuess(newInput, answer),
+    };
     const newGuessList = [...guesses, newGuess];
     setGuesses(newGuessList);
 
+    if (guesses.length > 4) {
+      setGameStatus("sad");
+    }
 
-  //   // if the guess is correct, show some sort of victory message
-  //   if (newGuess === answer) {
-  //     alert("Congratulations! You guessed the word!");
-  //   }
-  //   // if the guess is incorrect and there are 6 guesses, show a loss message
-  //   if (newGuess !== answer && newGuessList.length === 6) {
-  //     alert(`Sorry, you've used all your guesses. The word was ${answer}.`);
-  //   }
-  //   // if the guess is incorrect and there are less than 6 guesses, allow them to guess again
+    if (newInput === answer) {
+      setGameStatus("happy");
+    }
   }
   return (
     <>
-      <GuessList guessesList={guesses}/>
-      <GuessInput handleSubmitGuess={handleSubmitGuess} />
+      {/* <GuessList guessesList={guesses}/> */}
+      <Guess guesses={guesses} />
+      {gameStatus === "running" ? (
+        <GuessInput handleSubmitGuess={handleSubmitGuess} />
+      ) : (
+        <div className={`${gameStatus} banner`}>
+          {gameStatus === "happy" ? (
+            <p>
+              <strong>Congratulations!</strong> Got it in
+              <strong> {guesses.length} guesses</strong>.
+            </p>
+          ) : (
+            <p>
+              Sorry, the correct answer is <strong>{answer}</strong>.
+            </p>
+          )}
+        </div>
+      )}
     </>
   );
 }
