@@ -8,16 +8,18 @@ import Guess from "../Guess/Guess";
 import { checkGuess } from "../../game-helpers";
 import KeyboardInput from "../KeyboardInput/KeyboardInput";
 
-
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
+// // Pick a random word on every pageload.
+// const answer = sample(WORDS);
+// // To make debugging easier, we'll log the solution in the console.
+// console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
   const [gameStatus, setGameStatus] = React.useState("running");
   const [keyStatuses, setKeyStatuses] = React.useState([]);
+  const [answer, setAnswer] = React.useState(sample(WORDS));
+
+  console.info({ answer });
 
   function handleSubmitGuess(newInput) {
     // add the new guess to the list of guesses
@@ -27,7 +29,7 @@ function Game() {
     const newGuess = {
       value: newInput,
       id: crypto.randomUUID(),
-      result: validateGuess
+      result: validateGuess,
     };
     const newGuessList = [...guesses, newGuess];
     setGuesses(newGuessList);
@@ -40,19 +42,28 @@ function Game() {
       setGameStatus("happy");
     }
     updateKeyStatuses(validateGuess);
-  };
+  }
 
   function updateKeyStatuses(keys) {
-    const newKeyStatuses = {...keyStatuses};
+    const newKeyStatuses = { ...keyStatuses };
     keys.forEach((key) => {
       newKeyStatuses[key.letter] = key.status;
     });
     setKeyStatuses(newKeyStatuses);
-    
+  }
+
+  function resetGame() {
+    setAnswer(sample(WORDS));
+    setGuesses([]);
+    setGameStatus("running");
+    setKeyStatuses([]);
   }
 
   return (
     <>
+      <button className="reset-button" onClick={resetGame}>
+        Reset Game
+      </button>
       {/* <GuessList guessesList={guesses}/> */}
       <Guess guesses={guesses} />
       {gameStatus === "running" ? (

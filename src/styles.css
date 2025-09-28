@@ -265,3 +265,15 @@ h1 {
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+.reset-button {
+  border-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 16px;
+}
