@@ -17,13 +17,10 @@ function Guess({ guesses }) {
               const cellClass = guessAnswer
                 ? `cell ${guessAnswerLetter.status}`
                 : "cell";
-              const cellLetter = guessAnswer
-                ? guessAnswerLetter.letter
-                : "";
+              const cellLetter = guessAnswer ? guessAnswerLetter.letter : "";
               return (
                 <span className={cellClass} key={cellID}>
                   {cellLetter}
-                  
                 </span>
               );
             })}
