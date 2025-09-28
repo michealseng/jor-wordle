@@ -1,3 +1,5 @@
+// NOT USED ANYMORE
+
 import React from "react";
 
 function GuessList({guessesList}) {
