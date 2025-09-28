@@ -124,17 +124,20 @@ h1 {
   --radius: 0px 0px 0px 4px;
 }
 
-.cell.correct {
+.cell.correct,
+.keyboard-key.correct {
   background: var(--color-success);
   border-color: var(--color-success);
   color: white;
 }
-.cell.incorrect {
+.cell.incorrect,
+.keyboard-key.incorrect {
   background: var(--color-gray-300);
   border-color: var(--color-gray-300);
   color: white;
 }
-.cell.misplaced {
+.cell.misplaced,
+.keyboard-key.misplaced {
   background: var(--color-warning);
   border-color: var(--color-warning);
   color: white;
@@ -229,4 +232,48 @@ h1 {
   to {
     transform: translateY(0%);
   }
+}
+
+/* Keyboard Styling */
+.keyboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.keyboard-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.keyboard-key {
+  background: #eeeeee;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.reset-button {
+  border-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 16px;
 }
